@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carta de Amistad</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ffd6e0,#cce3ff);
+    font-family:'Segoe UI',sans-serif;
+    overflow:hidden;
+}
+
+/* Corazones flotando */
+.corazon{
+    position:absolute;
+    color:white;
+    animation:flotar 6s linear infinite;
+    opacity:0.7;
+}
+
+@keyframes flotar{
+    0%{transform:translateY(100vh) scale(0.5);}
+    100%{transform:translateY(-10vh) scale(1);}
+}
+
+/* Contenedor */
+.container{
+    position:relative;
+    perspective:1000px;
+}
+
+/* Sobre */
+.sobre{
+    width:320px;
+    height:220px;
+    position:relative;
+    cursor:pointer;
+}
+
+.base{
+    width:100%;
+    height:100%;
+    background:#ffffff;
+    border-radius:8px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    position:absolute;
+}
+
+/* Tapa del sobre */
+.tapa{
+    width:100%;
+    height:100%;
+    background:#ff8fab;
+    position:absolute;
+    transform-origin:top;
+    transition:transform 1s ease;
+    clip-path:polygon(0 0, 100% 0, 50% 60%);
+    border-radius:8px 8px 0 0;
+}
+
+/* Carta interior */
+.carta{
+    position:absolute;
+    width:90%;
+    height:90%;
+    background:#fff;
+    top:5%;
+    left:5%;
+    border-radius:8px;
+    padding:15px;
+    box-sizing:border-box;
+    text-align:center;
+    transform:translateY(20px);
+    opacity:0;
+    transition:all 1s ease;
+    overflow:auto;
+}
+
+.carta h2{
+    margin-top:0;
+    color:#ff4d6d;
+}
+
+iframe{
+    width:100%;
+    height:250px;
+    border-radius:8px;
+    margin-top:10px;
+}
+
+/* Estado abierto */
+.abierto .tapa{
+    transform:rotateX(180deg);
+}
+
+.abierto .carta{
+    transform:translateY(-10px);
+    opacity:1;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+/* Corazones decorativos */
+for(let i=0;i<15;i++){
+    let heart=document.createElement("div");
+    heart.className="corazon";
+    heart.innerHTML="❤";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(15+Math.random()*20)+"px";
+    heart.style.animationDuration=(4+Math.random()*4)+"s";
+    document.body.appendChild(heart);
+}
+
+function abrir(){
+    document.querySelector(".sobre").classList.toggle("abierto");
+}
+</script>
+
+<div class="container">
+    <div class="sobre" onclick="abrir()">
+        <div class="base"></div>
+        <div class="tapa"></div>
+        <div class="carta">
+            <h2>Para mi amiga 💕</h2>
+            <p>
+                Gracias por estar en mi vida.  
+                Tu amistad es uno de los regalos más bonitos que tengo.  
+                Este pequeño detalle es para recordarte lo especial que eres 💖
+            </p>
+
+            <!-- VIDEO DE YOUTUBE -->
+            <iframe 
+                src="https://www.youtube.com/embed/4e1EQslnPRQ"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
