@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carta de Amistad</title>
+<title>Carta Ultra Especial</title>
 
 <style>
 body{
@@ -12,143 +12,249 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#ffd6e0,#cce3ff);
+    background:linear-gradient(135deg,#ffedf3,#dceaff);
     font-family:'Segoe UI',sans-serif;
     overflow:hidden;
+    animation:fondoBrillo 5s ease-in-out infinite alternate;
 }
 
-/* Corazones flotando */
+@keyframes fondoBrillo {
+    from{background:linear-gradient(135deg,#ffedf3,#dceaff);}
+    to{background:linear-gradient(135deg,#ffe1f2,#c8e3ff);}
+}
+
+/* PANTALLA INICIAL */
+.inicio{
+    position:absolute;
+    text-align:center;
+    color:#d02579;
+    animation:fadeIn 1.2s ease-in;
+}
+
+.inicio h1{
+    font-size:30px;
+    text-shadow:2px 2px 8px rgba(255,255,255,0.9);
+}
+
+.inicio button{
+    margin-top:20px;
+    padding:12px 25px;
+    border:none;
+    border-radius:30px;
+    background:#d02579;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.inicio button:hover{
+    transform:scale(1.15);
+}
+
+/* SOBRE */
+.sobre{
+    width:340px;
+    height:220px;
+    background:#ff4d88;
+    position:relative;
+    cursor:pointer;
+    border-radius:15px;
+    transition:1s;
+    display:none;
+    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
+
+.tapa{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#ff66a3;
+    clip-path:polygon(0 0,100% 0,50% 65%);
+    transition:1s;
+    transform-origin:top;
+}
+
+.mensaje{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:white;
+    border-radius:15px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:25px;
+    box-sizing:border-box;
+    transform:scale(0);
+    transition:1s;
+    text-align:center;
+}
+
+.mensaje h1{
+    color:#d02579;
+    margin-bottom:12px;
+    font-size:24px;
+}
+
+.mensaje p{
+    color:#555;
+    font-size:15px;
+    white-space:pre-line;
+}
+
+.botones{
+    margin-top:15px;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:22px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.ver{
+    background:#d02579;
+    color:white;
+}
+
+.nover{
+    background:#aaa;
+}
+
+button:hover{
+    transform:scale(1.12);
+}
+
+.video-container{
+    margin-top:15px;
+    opacity:0;
+    transform:translateY(15px);
+    transition:1s;
+}
+
+.video-container.mostrar{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* CORAZONES */
 .corazon{
     position:absolute;
-    color:white;
+    color:#ff7599;
+    font-size:22px;
     animation:flotar 6s linear infinite;
-    opacity:0.7;
+    opacity:0.8;
 }
 
 @keyframes flotar{
-    0%{transform:translateY(100vh) scale(0.5);}
-    100%{transform:translateY(-10vh) scale(1);}
+    0%{ transform:translateY(100vh) scale(1); }
+    100%{ transform:translateY(-10vh) scale(1.4); }
 }
 
-/* Contenedor */
-.container{
-    position:relative;
-    perspective:1000px;
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
 }
 
-/* Sobre */
-.sobre{
-    width:320px;
-    height:220px;
-    position:relative;
-    cursor:pointer;
-}
-
-.base{
-    width:100%;
-    height:100%;
-    background:#ffffff;
-    border-radius:8px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.2);
-    position:absolute;
-}
-
-/* Tapa del sobre */
-.tapa{
-    width:100%;
-    height:100%;
-    background:#ff8fab;
-    position:absolute;
-    transform-origin:top;
-    transition:transform 1s ease;
-    clip-path:polygon(0 0, 100% 0, 50% 60%);
-    border-radius:8px 8px 0 0;
-}
-
-/* Carta interior */
-.carta{
-    position:absolute;
-    width:90%;
-    height:90%;
-    background:#fff;
-    top:5%;
-    left:5%;
-    border-radius:8px;
-    padding:15px;
-    box-sizing:border-box;
-    text-align:center;
-    transform:translateY(20px);
-    opacity:0;
-    transition:all 1s ease;
-    overflow:auto;
-}
-
-.carta h2{
-    margin-top:0;
-    color:#ff4d6d;
-}
-
-iframe{
-    width:100%;
-    height:250px;
-    border-radius:8px;
-    margin-top:10px;
-}
-
-/* Estado abierto */
-.abierto .tapa{
+.sobre.abierto .tapa{
     transform:rotateX(180deg);
 }
 
-.abierto .carta{
-    transform:translateY(-10px);
-    opacity:1;
+.sobre.abierto .mensaje{
+    transform:scale(1);
 }
 </style>
 </head>
 
 <body>
 
-<script>
-/* Corazones decorativos */
-for(let i=0;i<15;i++){
-    let heart=document.createElement("div");
-    heart.className="corazon";
-    heart.innerHTML="❤";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(15+Math.random()*20)+"px";
-    heart.style.animationDuration=(4+Math.random()*4)+"s";
-    document.body.appendChild(heart);
-}
+<audio id="musica" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
 
-function abrir(){
-    document.querySelector(".sobre").classList.toggle("abierto");
-}
-</script>
+<audio id="efecto">
+    <source src="abrir_sobre.mp3" type="audio/mpeg">
+</audio>
 
-<div class="container">
-    <div class="sobre" onclick="abrir()">
-        <div class="base"></div>
-        <div class="tapa"></div>
-        <div class="carta">
-            <h2>Para mi amiga 💕</h2>
-            <p>
-                Gracias por estar en mi vida.  
-                Tu amistad es uno de los regalos más bonitos que tengo.  
-                Este pequeño detalle es para recordarte lo especial que eres 💖
-            </p>
+<div class="inicio" id="inicio">
+    <h1>¿ESTÁS LISTA? 💖</h1>
+    <button onclick="comenzar()">Vamos ✨</button>
+</div>
 
-            <!-- VIDEO DE YOUTUBE -->
-            <iframe 
-                src="https://www.youtube.com/embed/4e1EQslnPRQ"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
+<div class="sobre" onclick="abrirCarta()" id="sobre">
+    <div class="tapa"></div>
+
+    <div class="mensaje">
+        <h1>Para my friend 💌</h1>
+        <p>
+Porque no seras espectadora, khooomo uwuw.  
+Con mucho lovee torcida waaa 💖
+        </p>
+
+        <div class="botones" id="botones">
+            <button class="ver" onclick="event.stopPropagation(); mostrarVideo()">Ver sorpresa 🎥</button>
+            <button class="nover" onclick="event.stopPropagation(); cancelarAuto()">Después...</button>
+        </div>
+
+        <div class="video-container" id="video">
+            <iframe width="280" height="160"
+            src="https://www.youtube.com/embed/4e1EQslnPRQ"
+            allowfullscreen>
             </iframe>
-
         </div>
     </div>
 </div>
+
+<script>
+let temporizador;
+let sonido = document.getElementById("efecto");
+let musica = document.getElementById("musica");
+
+function comenzar(){
+    musica.play();
+    document.getElementById("inicio").style.display="none";
+    document.getElementById("sobre").style.display="block";
+    crearCorazones();
+}
+
+function abrirCarta(){
+    sonido.play();
+    const sobre = document.getElementById("sobre");
+    sobre.classList.add("abierto");
+
+    if(!temporizador){
+        temporizador = setTimeout(mostrarVideo,5000);
+    }
+}
+
+function mostrarVideo(){
+    document.getElementById("video").classList.add("mostrar");
+    document.getElementById("botones").style.display="none";
+    clearTimeout(temporizador);
+}
+
+function cancelarAuto(){
+    clearTimeout(temporizador);
+}
+
+function crearCorazones(){
+    for(let i=0;i<20;i++){
+        let corazon=document.createElement("div");
+        corazon.className="corazon";
+        corazon.innerHTML="💖";
+        corazon.style.left=Math.random()*100+"vw";
+        corazon.style.animationDuration=(4+Math.random()*4)+"s";
+        document.body.appendChild(corazon);
+    }
+}
+</script>
 
 </body>
 </html>
