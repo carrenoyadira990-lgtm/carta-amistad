@@ -125,7 +125,7 @@ button:hover{
     margin-top:10px;
     color:#d02579;
     font-weight:bold;
-    animation:aparecer 0.5s ease-in;
+    animation:aparecer 0.4s ease-in;
 }
 
 @keyframes aparecer{
@@ -150,7 +150,7 @@ button:hover{
     <button onclick="comenzar()">Vamos ✨</button>
 </div>
 
-<div class="sobre" onclick="abrirCarta()" id="sobre">
+<div class="sobre" id="sobre" onclick="abrirCarta()">
     <div class="tapa"></div>
 
     <div class="mensaje">
@@ -194,10 +194,14 @@ function verSorpresa(){
 function despues(){
     let random = frases[Math.floor(Math.random()*frases.length)];
     let contenedor = document.getElementById("frase");
-    contenedor.innerHTML =
-        "<div class='frase-graciosa'>" +
-        random +
-        "<br><br><button class='ver' onclick='verSorpresa()'>Está bien... ver sorpresa 😅</button></div>";
+
+    contenedor.innerHTML = `
+        <div class="frase-graciosa">
+            ${random}
+            <br><br>
+            <button class="ver" onclick="verSorpresa()">Está bien... ver sorpresa 😅</button>
+        </div>
+    `;
 }
 </script>
 
