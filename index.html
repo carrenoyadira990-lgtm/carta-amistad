@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carta Ultra Especial</title>
+<title>Carta Especial</title>
 
 <style>
 body{
@@ -15,12 +15,6 @@ body{
     background:linear-gradient(135deg,#ffedf3,#dceaff);
     font-family:'Segoe UI',sans-serif;
     overflow:hidden;
-    animation:fondoBrillo 5s ease-in-out infinite alternate;
-}
-
-@keyframes fondoBrillo {
-    from{background:linear-gradient(135deg,#ffedf3,#dceaff);}
-    to{background:linear-gradient(135deg,#ffe1f2,#c8e3ff);}
 }
 
 /* PANTALLA INICIAL */
@@ -28,12 +22,6 @@ body{
     position:absolute;
     text-align:center;
     color:#d02579;
-    animation:fadeIn 1.2s ease-in;
-}
-
-.inicio h1{
-    font-size:30px;
-    text-shadow:2px 2px 8px rgba(255,255,255,0.9);
 }
 
 .inicio button{
@@ -50,13 +38,13 @@ body{
 }
 
 .inicio button:hover{
-    transform:scale(1.15);
+    transform:scale(1.1);
 }
 
 /* SOBRE */
 .sobre{
-    width:340px;
-    height:220px;
+    width:360px;
+    height:240px;
     background:#ff4d88;
     position:relative;
     cursor:pointer;
@@ -95,14 +83,15 @@ body{
 
 .mensaje h1{
     color:#d02579;
-    margin-bottom:12px;
-    font-size:24px;
+    margin-bottom:10px;
+    font-size:22px;
 }
 
 .mensaje p{
-    color:#555;
+    color:#444;
     font-size:15px;
-    white-space:pre-line;
+    line-height:1.4;
+    max-width:280px;
 }
 
 .botones{
@@ -129,38 +118,19 @@ button{
 }
 
 button:hover{
-    transform:scale(1.12);
+    transform:scale(1.1);
 }
 
-.video-container{
-    margin-top:15px;
-    opacity:0;
-    transform:translateY(15px);
-    transition:1s;
+.frase-graciosa{
+    margin-top:10px;
+    color:#d02579;
+    font-weight:bold;
+    animation:aparecer 0.5s ease-in;
 }
 
-.video-container.mostrar{
-    opacity:1;
-    transform:translateY(0);
-}
-
-/* CORAZONES */
-.corazon{
-    position:absolute;
-    color:#ff7599;
-    font-size:22px;
-    animation:flotar 6s linear infinite;
-    opacity:0.8;
-}
-
-@keyframes flotar{
-    0%{ transform:translateY(100vh) scale(1); }
-    100%{ transform:translateY(-10vh) scale(1.4); }
-}
-
-@keyframes fadeIn{
-    from{opacity:0;}
-    to{opacity:1;}
+@keyframes aparecer{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 .sobre.abierto .tapa{
@@ -175,14 +145,6 @@ button:hover{
 
 <body>
 
-<audio id="musica" loop>
-    <source src="musica.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="efecto">
-    <source src="abrir_sobre.mp3" type="audio/mpeg">
-</audio>
-
 <div class="inicio" id="inicio">
     <h1>¿ESTÁS LISTA? 💖</h1>
     <button onclick="comenzar()">Vamos ✨</button>
@@ -194,65 +156,48 @@ button:hover{
     <div class="mensaje">
         <h1>Para my friend 💌</h1>
         <p>
-Porque no seras espectadora, khooomo uwuw.  
+Porque no serás espectadora, khooomo uwuw.<br>
 Con mucho lovee torcida waaa 💖
         </p>
 
-        <div class="botones" id="botones">
-            <button class="ver" onclick="event.stopPropagation(); mostrarVideo()">Ver sorpresa 🎥</button>
-            <button class="nover" onclick="event.stopPropagation(); cancelarAuto()">Después...</button>
+        <div class="botones">
+            <button class="ver" onclick="event.stopPropagation(); verSorpresa()">Ver sorpresa 🎥</button>
+            <button class="nover" onclick="event.stopPropagation(); despues()">Después...</button>
         </div>
 
-        <div class="video-container" id="video">
-            <iframe width="280" height="160"
-            src="https://www.youtube.com/embed/4e1EQslnPRQ"
-            allowfullscreen>
-            </iframe>
-        </div>
+        <div id="frase"></div>
     </div>
 </div>
 
 <script>
-let temporizador;
-let sonido = document.getElementById("efecto");
-let musica = document.getElementById("musica");
+let frases = [
+    "¿Después? 👀 Sospechoso...",
+    "Ya no seas chistosa 😭",
+    "uwuwuwu 🥺",
+    "Netataaa… dale clic de una vez 😂",
+    "Nada de vivir en el pasado… estamos en modo presente ✨"
+];
 
 function comenzar(){
-    musica.play();
     document.getElementById("inicio").style.display="none";
     document.getElementById("sobre").style.display="block";
-    crearCorazones();
 }
 
 function abrirCarta(){
-    sonido.play();
-    const sobre = document.getElementById("sobre");
-    sobre.classList.add("abierto");
-
-    if(!temporizador){
-        temporizador = setTimeout(mostrarVideo,5000);
-    }
+    document.getElementById("sobre").classList.add("abierto");
 }
 
-function mostrarVideo(){
-    document.getElementById("video").classList.add("mostrar");
-    document.getElementById("botones").style.display="none";
-    clearTimeout(temporizador);
+function verSorpresa(){
+    window.open("https://www.youtube.com/embed/4e1EQslnPRQ?autoplay=1", "_blank");
 }
 
-function cancelarAuto(){
-    clearTimeout(temporizador);
-}
-
-function crearCorazones(){
-    for(let i=0;i<20;i++){
-        let corazon=document.createElement("div");
-        corazon.className="corazon";
-        corazon.innerHTML="💖";
-        corazon.style.left=Math.random()*100+"vw";
-        corazon.style.animationDuration=(4+Math.random()*4)+"s";
-        document.body.appendChild(corazon);
-    }
+function despues(){
+    let random = frases[Math.floor(Math.random()*frases.length)];
+    let contenedor = document.getElementById("frase");
+    contenedor.innerHTML =
+        "<div class='frase-graciosa'>" +
+        random +
+        "<br><br><button class='ver' onclick='verSorpresa()'>Está bien... ver sorpresa 😅</button></div>";
 }
 </script>
 
