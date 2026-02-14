@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carta de Amistad</title>
+<title>Carta para Netata 💖</title>
 
 <style>
 
@@ -13,95 +13,107 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#ffd6e0,#cce3ff);
-    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#ffd6ec,#d7d9ff);
+    font-family: 'Segoe UI', sans-serif;
     overflow:hidden;
 }
 
-/* Carta */
+/* CARTA */
 .carta{
-    width:350px;
     background:white;
+    width:350px;
     padding:30px;
-    border-radius:15px;
+    border-radius:20px;
     text-align:center;
-    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
     position:relative;
+    animation:fadeIn 1s ease;
 }
 
-/* Título */
-.carta h2{
+h2{
     margin-top:0;
-    color:#ff2d7a;
+    color:#d63384;
 }
 
-/* Texto */
-.carta p{
-    color:#555;
+.frase-principal{
+    margin:20px 0;
     font-size:16px;
+    line-height:1.5;
 }
 
-/* Botones */
+.botones{
+    margin-top:20px;
+}
+
 button{
-    margin:10px;
-    padding:10px 20px;
+    padding:10px 18px;
     border:none;
-    border-radius:25px;
+    border-radius:20px;
     cursor:pointer;
-    font-size:14px;
+    font-weight:bold;
+    margin:5px;
+    transition:0.3s;
 }
 
-.ver{
-    background:#ff2d7a;
+#btnVer{
+    background:#ff4fa3;
     color:white;
 }
 
-.despues{
+#btnDespues{
     background:#ccc;
 }
 
-/* Frase dinámica */
+button:hover{
+    transform:scale(1.05);
+}
+
+/* FRASES */
 .frase-graciosa{
     margin-top:20px;
     font-size:18px;
-    color:#ff2d7a;
+    color:#d63384;
     font-weight:bold;
-    min-height:40px;
+    animation:fadeIn 0.5s ease;
 }
 
-/* Botón final que cae */
+/* BOTON FINAL CAYENDO */
 .boton-final{
-    position:fixed;
-    top:-120px;
+    position:absolute;
+    top:-100px;
     left:50%;
     transform:translateX(-50%);
-    padding:18px 35px;
-    font-size:18px;
-    border:none;
-    border-radius:40px;
-    background:linear-gradient(45deg,#ff4da6,#ff1a75);
+    padding:15px 30px;
+    background:#ff4fa3;
     color:white;
+    border:none;
+    border-radius:30px;
+    font-size:18px;
+    font-weight:bold;
     cursor:pointer;
-    box-shadow:0 10px 25px rgba(0,0,0,0.3);
-    animation:caer 1.5s forwards ease-out;
+    animation:caer 1s forwards;
 }
 
 @keyframes caer{
-    0%{ top:-120px; }
-    100%{ top:40%; }
+    to{ top:40%; }
 }
 
-/* Corazones flotando */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* CORAZONES */
 .corazon{
     position:absolute;
-    color:#ff4d88;
+    color:#ff4fa3;
     animation:flotar 6s linear infinite;
     font-size:20px;
 }
 
 @keyframes flotar{
-    0%{ transform:translateY(0); opacity:1;}
-    100%{ transform:translateY(-600px); opacity:0;}
+    0%{transform:translateY(100vh); opacity:1;}
+    100%{transform:translateY(-10vh); opacity:0;}
 }
 
 </style>
@@ -110,18 +122,23 @@ button{
 
 <div class="carta">
     <h2>Para my friend 💌</h2>
-    <p>
+
+    <div class="frase-principal">
         Porque no serás espectadora, khooomo uwuw.<br>
         Con mucho lovee torcida waaa 💖
-    </p>
+    </div>
 
-    <button class="ver" id="btnVer">Ver sorpresa 🎥</button>
-    <button class="despues" id="btnDespues">Después…</button>
+    <div class="botones">
+        <button id="btnVer">Ver sorpresa 🎥</button>
+        <button id="btnDespues">Después...</button>
+    </div>
 
-    <div id="frase" class="frase-graciosa"></div>
+    <div id="frase"></div>
 </div>
 
 <script>
+
+document.addEventListener("DOMContentLoaded", function(){
 
 let frases = [
     "¿Después? 👀 Sospechoso...",
@@ -138,16 +155,20 @@ let btnVer = document.getElementById("btnVer");
 let carta = document.querySelector(".carta");
 let contenedor = document.getElementById("frase");
 
-/* Botón ver directo */
+/* Botón Ver sorpresa directo */
 btnVer.addEventListener("click", function(){
-    window.open("https://www.youtube.com/embed/4e1EQslnPRQ?autoplay=1", "_blank");
+    abrirVideo();
 });
 
-/* Secuencia de frases */
+/* Botón Después */
 btnDespues.addEventListener("click", function(){
 
     if(indice < frases.length){
-        contenedor.innerHTML = frases[indice];
+        contenedor.innerHTML = `
+            <div class="frase-graciosa">
+                ${frases[indice]}
+            </div>
+        `;
         indice++;
     }
 
@@ -162,33 +183,38 @@ btnDespues.addEventListener("click", function(){
     }
 });
 
-/* Botón que cae */
 function mostrarBotonFinal(){
     let boton = document.createElement("button");
     boton.innerText = "Ver sorpresa 💖";
     boton.className = "boton-final";
-    boton.onclick = function(){
-        window.open("https://www.youtube.com/embed/4e1EQslnPRQ?autoplay=1", "_blank");
-    };
+    boton.onclick = abrirVideo;
     document.body.appendChild(boton);
 }
 
+function abrirVideo(){
+    document.body.innerHTML = `
+        <iframe width="100%" height="100%" 
+        src="https://www.youtube.com/embed/4e1EQslnPRQ?autoplay=1"
+        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+        </iframe>
+    `;
+}
+
 /* Corazones flotando */
-function crearCorazon(){
+setInterval(()=>{
     let corazon = document.createElement("div");
     corazon.className="corazon";
-    corazon.innerHTML="💖";
     corazon.style.left=Math.random()*100+"vw";
-    corazon.style.top="100vh";
-    corazon.style.fontSize=(Math.random()*20+15)+"px";
+    corazon.innerText="💖";
     document.body.appendChild(corazon);
 
     setTimeout(()=>{
         corazon.remove();
     },6000);
-}
 
-setInterval(crearCorazon,800);
+},500);
+
+});
 
 </script>
 
