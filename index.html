@@ -13,38 +13,47 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#ffd6ec,#d7d9ff);
+    background:linear-gradient(135deg,#ffe6f2,#f3e8ff);
     font-family:'Segoe UI', sans-serif;
     overflow:hidden;
 }
 
-/* SOBRE */
+/* SOBRE MEDIANO PASTEL */
 .sobre{
-    width:200px;
-    height:140px;
-    background:#ff4fa3;
+    width:260px;
+    height:170px;
+    background:#f8a5c2; /* rosado pastel */
     position:relative;
     cursor:pointer;
-    border-radius:10px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+    border-radius:12px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
     display:flex;
     justify-content:center;
     align-items:center;
     color:white;
     font-weight:bold;
-    transition:0.5s;
+    font-size:18px;
+    z-index:1;
 }
 
+/* TAPA DEL SOBRE */
 .sobre::before{
     content:"";
     position:absolute;
     top:0;
+    left:0;
     width:0;
     height:0;
-    border-left:100px solid transparent;
-    border-right:100px solid transparent;
-    border-bottom:70px solid #ff75ba;
-    border-radius:10px 10px 0 0;
+    border-left:130px solid transparent;
+    border-right:130px solid transparent;
+    border-bottom:85px solid #fcd5e5; /* rosado más claro */
+    border-radius:12px 12px 0 0;
+    z-index:0; /* ahora queda detrás del texto */
+}
+
+.sobre span{
+    position:relative;
+    z-index:2; /* asegura que el texto esté encima */
 }
 
 /* CARTA */
@@ -96,12 +105,12 @@ button{
 }
 
 #btnVer{
-    background:#ff4fa3;
+    background:#f8a5c2;
     color:white;
 }
 
 #btnDespues{
-    background:#ccc;
+    background:#ddd;
 }
 
 button:hover{
@@ -128,7 +137,7 @@ button:hover{
     left:50%;
     transform:translateX(-50%);
     padding:15px 30px;
-    background:#ff4fa3;
+    background:#f8a5c2;
     color:white;
     border:none;
     border-radius:30px;
@@ -145,7 +154,7 @@ button:hover{
 /* CORAZONES */
 .corazon{
     position:absolute;
-    color:#ff4fa3;
+    color:#f8a5c2;
     animation:flotar 6s linear infinite;
     font-size:20px;
 }
@@ -160,7 +169,7 @@ button:hover{
 <body>
 
 <div class="sobre" id="sobre">
-    Toca para abrir 💌
+    <span>Toca para abrir 💌</span>
 </div>
 
 <div class="carta" id="carta">
@@ -199,16 +208,13 @@ let btnDespues = document.getElementById("btnDespues");
 let btnVer = document.getElementById("btnVer");
 let contenedor = document.getElementById("frase");
 
-/* ABRIR SOBRE */
 sobre.addEventListener("click", function(){
     sobre.style.display="none";
     carta.style.display="block";
 });
 
-/* VER DIRECTO */
 btnVer.addEventListener("click", abrirVideo);
 
-/* DESPUÉS */
 btnDespues.addEventListener("click", function(){
 
     if(indice < frases.length){
@@ -251,7 +257,6 @@ function abrirVideo(){
     `;
 }
 
-/* CORAZONES */
 setInterval(()=>{
     let corazon=document.createElement("div");
     corazon.className="corazon";
