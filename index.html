@@ -14,8 +14,37 @@ body{
     justify-content:center;
     align-items:center;
     background:linear-gradient(135deg,#ffd6ec,#d7d9ff);
-    font-family: 'Segoe UI', sans-serif;
+    font-family:'Segoe UI', sans-serif;
     overflow:hidden;
+}
+
+/* SOBRE */
+.sobre{
+    width:200px;
+    height:140px;
+    background:#ff4fa3;
+    position:relative;
+    cursor:pointer;
+    border-radius:10px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-weight:bold;
+    transition:0.5s;
+}
+
+.sobre::before{
+    content:"";
+    position:absolute;
+    top:0;
+    width:0;
+    height:0;
+    border-left:100px solid transparent;
+    border-right:100px solid transparent;
+    border-bottom:70px solid #ff75ba;
+    border-radius:10px 10px 0 0;
 }
 
 /* CARTA */
@@ -26,8 +55,19 @@ body{
     border-radius:20px;
     text-align:center;
     box-shadow:0 10px 25px rgba(0,0,0,0.2);
-    position:relative;
-    animation:fadeIn 1s ease;
+    position:absolute;
+    display:none;
+    animation:abrir 0.6s ease forwards;
+}
+
+@keyframes abrir{
+    from{transform:scale(0.5); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+}
+
+@keyframes cerrar{
+    from{transform:scale(1); opacity:1;}
+    to{transform:scale(0); opacity:0;}
 }
 
 h2{
@@ -68,7 +108,6 @@ button:hover{
     transform:scale(1.05);
 }
 
-/* FRASES */
 .frase-graciosa{
     margin-top:20px;
     font-size:18px;
@@ -77,7 +116,12 @@ button:hover{
     animation:fadeIn 0.5s ease;
 }
 
-/* BOTON FINAL CAYENDO */
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+/* BOTON FINAL */
 .boton-final{
     position:absolute;
     top:-100px;
@@ -98,11 +142,6 @@ button:hover{
     to{ top:40%; }
 }
 
-@keyframes fadeIn{
-    from{opacity:0; transform:translateY(20px);}
-    to{opacity:1; transform:translateY(0);}
-}
-
 /* CORAZONES */
 .corazon{
     position:absolute;
@@ -120,7 +159,11 @@ button:hover{
 </head>
 <body>
 
-<div class="carta">
+<div class="sobre" id="sobre">
+    Toca para abrir 💌
+</div>
+
+<div class="carta" id="carta">
     <h2>Para my friend 💌</h2>
 
     <div class="frase-principal">
@@ -150,17 +193,22 @@ let frases = [
 
 let indice = 0;
 
+let sobre = document.getElementById("sobre");
+let carta = document.getElementById("carta");
 let btnDespues = document.getElementById("btnDespues");
 let btnVer = document.getElementById("btnVer");
-let carta = document.querySelector(".carta");
 let contenedor = document.getElementById("frase");
 
-/* Botón Ver sorpresa directo */
-btnVer.addEventListener("click", function(){
-    abrirVideo();
+/* ABRIR SOBRE */
+sobre.addEventListener("click", function(){
+    sobre.style.display="none";
+    carta.style.display="block";
 });
 
-/* Botón Después */
+/* VER DIRECTO */
+btnVer.addEventListener("click", abrirVideo);
+
+/* DESPUÉS */
 btnDespues.addEventListener("click", function(){
 
     if(indice < frases.length){
@@ -173,45 +221,44 @@ btnDespues.addEventListener("click", function(){
     }
 
     if(indice === frases.length){
-        btnDespues.style.display = "none";
-        btnVer.style.display = "none";
+        btnDespues.style.display="none";
+        btnVer.style.display="none";
 
         setTimeout(()=>{
-            carta.style.display = "none";
-            mostrarBotonFinal();
-        }, 800);
+            carta.style.animation="cerrar 0.6s forwards";
+            setTimeout(()=>{
+                carta.style.display="none";
+                mostrarBotonFinal();
+            },600);
+        },800);
     }
 });
 
 function mostrarBotonFinal(){
     let boton = document.createElement("button");
-    boton.innerText = "Ver sorpresa 💖";
-    boton.className = "boton-final";
-    boton.onclick = abrirVideo;
+    boton.innerText="Ver sorpresa 💖";
+    boton.className="boton-final";
+    boton.onclick=abrirVideo;
     document.body.appendChild(boton);
 }
 
 function abrirVideo(){
-    document.body.innerHTML = `
-        <iframe width="100%" height="100%" 
+    document.body.innerHTML=`
+        <iframe width="100%" height="100%"
         src="https://www.youtube.com/embed/4e1EQslnPRQ?autoplay=1"
         frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
         </iframe>
     `;
 }
 
-/* Corazones flotando */
+/* CORAZONES */
 setInterval(()=>{
-    let corazon = document.createElement("div");
+    let corazon=document.createElement("div");
     corazon.className="corazon";
     corazon.style.left=Math.random()*100+"vw";
     corazon.innerText="💖";
     document.body.appendChild(corazon);
-
-    setTimeout(()=>{
-        corazon.remove();
-    },6000);
-
+    setTimeout(()=>{corazon.remove();},6000);
 },500);
 
 });
