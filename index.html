@@ -3,173 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carta Especial</title>
+<title>Carta de Amistad</title>
 
 <style>
+
 body{
     margin:0;
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#ffedf3,#dceaff);
+    background:linear-gradient(135deg,#ffd6e0,#cce3ff);
     font-family:'Segoe UI',sans-serif;
     overflow:hidden;
 }
 
-/* PANTALLA INICIAL */
-.inicio{
-    position:absolute;
-    text-align:center;
-    color:#d02579;
-}
-
-.inicio button{
-    margin-top:20px;
-    padding:12px 25px;
-    border:none;
-    border-radius:30px;
-    background:#d02579;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-    font-size:16px;
-    transition:0.3s;
-}
-
-.inicio button:hover{
-    transform:scale(1.1);
-}
-
-/* SOBRE */
-.sobre{
-    width:360px;
-    height:240px;
-    background:#ff4d88;
-    position:relative;
-    border-radius:15px;
-    transition:1s;
-    display:none;
-    box-shadow:0 15px 40px rgba(0,0,0,0.2);
-    cursor:pointer;
-}
-
-.tapa{
-    position:absolute;
-    width:100%;
-    height:100%;
-    background:#ff66a3;
-    clip-path:polygon(0 0,100% 0,50% 65%);
-    transition:1s;
-    transform-origin:top;
-}
-
-.mensaje{
-    position:absolute;
-    width:100%;
-    height:100%;
+/* Carta */
+.carta{
+    width:350px;
     background:white;
+    padding:30px;
     border-radius:15px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    padding:25px;
-    box-sizing:border-box;
-    transform:scale(0);
-    transition:1s;
     text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+    position:relative;
 }
 
-.mensaje h1{
-    color:#d02579;
-    margin-bottom:10px;
-    font-size:22px;
+/* Título */
+.carta h2{
+    margin-top:0;
+    color:#ff2d7a;
 }
 
-.mensaje p{
-    color:#444;
-    font-size:15px;
-    line-height:1.4;
-    max-width:280px;
+/* Texto */
+.carta p{
+    color:#555;
+    font-size:16px;
 }
 
-.botones{
-    margin-top:15px;
-}
-
+/* Botones */
 button{
-    padding:8px 15px;
-    margin:5px;
+    margin:10px;
+    padding:10px 20px;
     border:none;
-    border-radius:22px;
+    border-radius:25px;
     cursor:pointer;
-    font-weight:bold;
-    transition:0.3s;
+    font-size:14px;
 }
 
 .ver{
-    background:#d02579;
+    background:#ff2d7a;
     color:white;
 }
 
-.nover{
-    background:#aaa;
+.despues{
+    background:#ccc;
 }
 
-button:hover{
-    transform:scale(1.1);
-}
-
+/* Frase dinámica */
 .frase-graciosa{
-    margin-top:10px;
-    color:#d02579;
+    margin-top:20px;
+    font-size:18px;
+    color:#ff2d7a;
     font-weight:bold;
-    animation:aparecer 0.4s ease-in;
+    min-height:40px;
 }
 
-@keyframes aparecer{
-    from{opacity:0; transform:translateY(10px);}
-    to{opacity:1; transform:translateY(0);}
+/* Botón final que cae */
+.boton-final{
+    position:fixed;
+    top:-120px;
+    left:50%;
+    transform:translateX(-50%);
+    padding:18px 35px;
+    font-size:18px;
+    border:none;
+    border-radius:40px;
+    background:linear-gradient(45deg,#ff4da6,#ff1a75);
+    color:white;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    animation:caer 1.5s forwards ease-out;
 }
 
-.sobre.abierto .tapa{
-    transform:rotateX(180deg);
+@keyframes caer{
+    0%{ top:-120px; }
+    100%{ top:40%; }
 }
 
-.sobre.abierto .mensaje{
-    transform:scale(1);
+/* Corazones flotando */
+.corazon{
+    position:absolute;
+    color:#ff4d88;
+    animation:flotar 6s linear infinite;
+    font-size:20px;
 }
+
+@keyframes flotar{
+    0%{ transform:translateY(0); opacity:1;}
+    100%{ transform:translateY(-600px); opacity:0;}
+}
+
 </style>
 </head>
-
 <body>
 
-<div class="inicio" id="inicio">
-    <h1>¿ESTÁS LISTA? 💖</h1>
-    <button onclick="comenzar()">Vamos ✨</button>
-</div>
+<div class="carta">
+    <h2>Para my friend 💌</h2>
+    <p>
+        Porque no serás espectadora, khooomo uwuw.<br>
+        Con mucho lovee torcida waaa 💖
+    </p>
 
-<div class="sobre" id="sobre">
-    <div class="tapa"></div>
+    <button class="ver" id="btnVer">Ver sorpresa 🎥</button>
+    <button class="despues" id="btnDespues">Después…</button>
 
-    <div class="mensaje">
-        <h1>Para my friend 💌</h1>
-        <p>
-Porque no serás espectadora, khooomo uwuw.<br>
-Con mucho lovee torcida waaa 💖
-        </p>
-
-        <div class="botones">
-            <button class="ver" id="btnVer">Ver sorpresa 🎥</button>
-            <button class="nover" id="btnDespues">Después...</button>
-        </div>
-
-        <div id="frase"></div>
-    </div>
+    <div id="frase" class="frase-graciosa"></div>
 </div>
 
 <script>
+
 let frases = [
     "¿Después? 👀 Sospechoso...",
     "Ya no seas chistosa 😭",
@@ -178,37 +131,65 @@ let frases = [
     "Nada de vivir en el pasado… estamos en modo presente ✨"
 ];
 
-function comenzar(){
-    document.getElementById("inicio").style.display="none";
-    document.getElementById("sobre").style.display="block";
-}
+let indice = 0;
 
-let sobre = document.getElementById("sobre");
-let btnVer = document.getElementById("btnVer");
 let btnDespues = document.getElementById("btnDespues");
+let btnVer = document.getElementById("btnVer");
+let carta = document.querySelector(".carta");
+let contenedor = document.getElementById("frase");
 
-sobre.addEventListener("click", function(){
-    sobre.classList.add("abierto");
-});
-
-btnVer.addEventListener("click", function(e){
-    e.stopPropagation();
+/* Botón ver directo */
+btnVer.addEventListener("click", function(){
     window.open("https://www.youtube.com/embed/4e1EQslnPRQ?autoplay=1", "_blank");
 });
 
-btnDespues.addEventListener("click", function(e){
-    e.stopPropagation();
-    let random = frases[Math.floor(Math.random()*frases.length)];
-    document.getElementById("frase").innerHTML = `
-        <div class="frase-graciosa">
-            ${random}
-            <br><br>
-            <button class="ver" onclick="window.open('https://www.youtube.com/embed/4e1EQslnPRQ?autoplay=1','_blank')">
-            Está bien... ver sorpresa 😅
-            </button>
-        </div>
-    `;
+/* Secuencia de frases */
+btnDespues.addEventListener("click", function(){
+
+    if(indice < frases.length){
+        contenedor.innerHTML = frases[indice];
+        indice++;
+    }
+
+    if(indice === frases.length){
+        btnDespues.style.display = "none";
+        btnVer.style.display = "none";
+
+        setTimeout(()=>{
+            carta.style.display = "none";
+            mostrarBotonFinal();
+        }, 800);
+    }
 });
+
+/* Botón que cae */
+function mostrarBotonFinal(){
+    let boton = document.createElement("button");
+    boton.innerText = "Ver sorpresa 💖";
+    boton.className = "boton-final";
+    boton.onclick = function(){
+        window.open("https://www.youtube.com/embed/4e1EQslnPRQ?autoplay=1", "_blank");
+    };
+    document.body.appendChild(boton);
+}
+
+/* Corazones flotando */
+function crearCorazon(){
+    let corazon = document.createElement("div");
+    corazon.className="corazon";
+    corazon.innerHTML="💖";
+    corazon.style.left=Math.random()*100+"vw";
+    corazon.style.top="100vh";
+    corazon.style.fontSize=(Math.random()*20+15)+"px";
+    document.body.appendChild(corazon);
+
+    setTimeout(()=>{
+        corazon.remove();
+    },6000);
+}
+
+setInterval(crearCorazon,800);
+
 </script>
 
 </body>
