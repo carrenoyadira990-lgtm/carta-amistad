@@ -47,11 +47,11 @@ body{
     height:240px;
     background:#ff4d88;
     position:relative;
-    cursor:pointer;
     border-radius:15px;
     transition:1s;
     display:none;
     box-shadow:0 15px 40px rgba(0,0,0,0.2);
+    cursor:pointer;
 }
 
 .tapa{
@@ -150,7 +150,7 @@ button:hover{
     <button onclick="comenzar()">Vamos ✨</button>
 </div>
 
-<div class="sobre" id="sobre" onclick="abrirCarta()">
+<div class="sobre" id="sobre">
     <div class="tapa"></div>
 
     <div class="mensaje">
@@ -161,8 +161,8 @@ Con mucho lovee torcida waaa 💖
         </p>
 
         <div class="botones">
-            <button class="ver" onclick="event.stopPropagation(); verSorpresa()">Ver sorpresa 🎥</button>
-            <button class="nover" onclick="event.stopPropagation(); despues()">Después...</button>
+            <button class="ver" id="btnVer">Ver sorpresa 🎥</button>
+            <button class="nover" id="btnDespues">Después...</button>
         </div>
 
         <div id="frase"></div>
@@ -183,26 +183,32 @@ function comenzar(){
     document.getElementById("sobre").style.display="block";
 }
 
-function abrirCarta(){
-    document.getElementById("sobre").classList.add("abierto");
-}
+let sobre = document.getElementById("sobre");
+let btnVer = document.getElementById("btnVer");
+let btnDespues = document.getElementById("btnDespues");
 
-function verSorpresa(){
+sobre.addEventListener("click", function(){
+    sobre.classList.add("abierto");
+});
+
+btnVer.addEventListener("click", function(e){
+    e.stopPropagation();
     window.open("https://www.youtube.com/embed/4e1EQslnPRQ?autoplay=1", "_blank");
-}
+});
 
-function despues(){
+btnDespues.addEventListener("click", function(e){
+    e.stopPropagation();
     let random = frases[Math.floor(Math.random()*frases.length)];
-    let contenedor = document.getElementById("frase");
-
-    contenedor.innerHTML = `
+    document.getElementById("frase").innerHTML = `
         <div class="frase-graciosa">
             ${random}
             <br><br>
-            <button class="ver" onclick="verSorpresa()">Está bien... ver sorpresa 😅</button>
+            <button class="ver" onclick="window.open('https://www.youtube.com/embed/4e1EQslnPRQ?autoplay=1','_blank')">
+            Está bien... ver sorpresa 😅
+            </button>
         </div>
     `;
-}
+});
 </script>
 
 </body>
